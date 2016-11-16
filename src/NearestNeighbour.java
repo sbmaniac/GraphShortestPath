@@ -1,74 +1,58 @@
+import com.sun.org.apache.xpath.internal.SourceTree;
+
 /**
- * Created by sbmaniac on 2016-11-13.
+ * Created by sbmaniac on 16.11.2016.
  */
 public class NearestNeighbour {
     private int startingPointIndex;
+    private int actualPointIndex;
+    private int visitedPointsCount;
     private Punkt2D startingPoint;
-    private int visitedPoints;
+    private Punkt2D[] citiesCoord;
+    private DistanceCalculator distanceCalculator;
+    private double pathLength;
 
 
-    public NearestNeighbour(Punkt2D startingPoint){
+    public NearestNeighbour(Punkt2D[] citiesCoord, Punkt2D startingPoint){
         this.startingPoint = startingPoint;
-        this.visitedPoints = 0;
-        this.startingPointIndex =0;
+        this.citiesCoord = citiesCoord;
+        setStartingPoint(citiesCoord);
+        this.distanceCalculator = new DistanceCalculator();
+        distanceCalculator.fillDistanceArray(citiesCoord);
+        this.actualPointIndex = this.startingPointIndex;
+        visitedPointsCount = 1;
+        pathLength = 0;
+
+        System.out.println("Stage ready");
+        System.out.println("Starting from :"+ startingPoint.toString());
+        System.out.println("Najkrótsza droga wynosi :" + getShortestPath());
     }
 
+
+    public double getShortestPath(){
+
+
+        return pathLength;
+    }
+
+
+
+
+
+
+
+
+
+
     public void setStartingPoint(Punkt2D[] citiesCoord){
-        int index = 0;
         for(int i=0;i<citiesCoord.length;i++){
             if(citiesCoord[i].compareTo(startingPoint)==0){
                 citiesCoord[i].setStartingPoint(true);
-                startingPointIndex = i;
+                this.startingPointIndex = i;
                 citiesCoord[i].setVisited(true);
+                citiesCoord[i].setStartingPoint(true);
                 System.out.println("Starting point is set");
             }
         }
     }
-
-    public float getShortestPath(Punkt2D[] citiesCoord,DistanceCalculator filledDistanceTab) {
-        Punkt2D actualPoint;
-        float pathLength = 0;
-        float shortestPathBetweenTwoPoints;
-        int nextPointIndex;
-
-        setStartingPoint(citiesCoord);
-        actualPoint=startingPoint;
-        int actualPointIndex=startingPointIndex;
-        visitedPoints+=1;
-
-        if(actualPointIndex==citiesCoord.length-1){
-            shortestPathBetweenTwoPoints = filledDistanceTab.getDistanceFromDistanceArray(actualPointIndex,actualPointIndex-1);
-            nextPointIndex = actualPointIndex-1;
-        }else
-        {
-            shortestPathBetweenTwoPoints = filledDistanceTab.getDistanceFromDistanceArray(actualPointIndex,actualPointIndex+1);
-            nextPointIndex = actualPointIndex+1;
-        }
-
-
-        do {
-
-            for (int i = 0; i < citiesCoord.length; i++) {
-                if(citiesCoord[i].compareTo(actualPoint)!=0){
-                    if(filledDistanceTab.getDistanceFromDistanceArray(actualPointIndex,i)!=0){
-                        if (filledDistanceTab.getDistanceFromDistanceArray(actualPointIndex,i)<shortestPathBetweenTwoPoints){
-                            shortestPathBetweenTwoPoints=filledDistanceTab.getDistanceFromDistanceArray(actualPointIndex,i);
-                            nextPointIndex=i;
-                        }
-                    }
-                }
-            }
-            actualPoint= citiesCoord[nextPointIndex];
-            pathLength+=shortestPathBetweenTwoPoints;
-            actualPoint.setVisited(true);
-
-
-        } while (visitedPoints != citiesCoord.length);
-
-        return pathLength;
-
-    }
-
-
-
 }

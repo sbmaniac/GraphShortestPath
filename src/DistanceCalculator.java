@@ -8,7 +8,7 @@ public class DistanceCalculator {
         float[][] distanceArray;
 
 
-    public void fillDistanceTab(Punkt2D[] citiesCoordArray){
+    public void fillDistanceArray(Punkt2D[] citiesCoordArray){
          this.distanceArray = new float[citiesCoordArray.length][citiesCoordArray.length];
         for (int i = 0; i<distanceArray.length;i++){
             for(int j =0; j<distanceArray[i].length;j++){
@@ -20,7 +20,7 @@ public class DistanceCalculator {
             }
         }
 
-
+        System.out.println("Distance Array filled");
     }
 
     public float getDistanceToOtherCoord(Punkt2D point1,Punkt2D point2){
