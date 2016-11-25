@@ -5,7 +5,7 @@ import java.util.Set;
  */
 public class DistanceCalculator {
 
-        float[][] distanceArray;
+       private float[][] distanceArray;
 
 
     public void fillDistanceArray(Punkt2D[] citiesCoordArray){
@@ -38,5 +38,15 @@ public class DistanceCalculator {
         return distanceArray[index1][index2];
     }
 
-
+    public void printFilledDistanceArray(){
+        System.out.println("Printing distance Array \n");
+        for(int i = 0; i<distanceArray.length;i++){
+            for(int j = 0; j<distanceArray[i].length;j++){
+                System.out.print(distanceArray[i][j]);
+                System.out.print(" ||");
+            }
+            System.out.println();
+            System.out.println("-----------------------------------------");
+        }
+    }
 }

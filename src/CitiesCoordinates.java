@@ -3,7 +3,8 @@
  */
 public class CitiesCoordinates {
 
-    Punkt2D[] citiesCoordinatesArray;
+
+    private Punkt2D[] citiesCoordinatesArray;
 
     public CitiesCoordinates(int cities) {
         citiesCoordinatesArray = new Punkt2D[cities];
@@ -22,4 +23,8 @@ public class CitiesCoordinates {
             citiesCoordinatesArray[i] = new Punkt2D(tempX,tempY);
         }*/
     }
+    public Punkt2D[] getCitiesCoordinatesArray() {
+        return citiesCoordinatesArray;
+    }
+
 }
