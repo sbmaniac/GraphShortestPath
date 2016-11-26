@@ -39,16 +39,17 @@ public class NearestNeighbour {
 
     public double getShortestPath(){
         System.out.println("Looking for shortest path started");
+        System.out.println("Actual path: "+pathLength);
         do{
             double tempDistanceBetweenTwoPoints = 0;
             for(int i=0; i < citiesCoord.length; i ++){
                 nextPoint = citiesCoord[i];
-                if(actualPointIndex != i && visitedPointsCount<citiesCoord.length && nextPoint.isVisited()==false){ // ten warunek sprawdzic
+                if(actualPointIndex != i && visitedPointsCount<=citiesCoord.length && nextPoint.isVisited()==false){ // ten warunek sprawdzic
                     if(tempDistanceBetweenTwoPoints==0){
                         tempDistanceBetweenTwoPoints = distanceCalculator.getDistanceFromDistanceArray(actualPointIndex,i);
                         nextPointIndex = i;
                     }else{
-                        if(tempDistanceBetweenTwoPoints<distanceCalculator.getDistanceFromDistanceArray(actualPointIndex,i)){
+                        if(tempDistanceBetweenTwoPoints>distanceCalculator.getDistanceFromDistanceArray(actualPointIndex,i)){
                             tempDistanceBetweenTwoPoints = distanceCalculator.getDistanceFromDistanceArray(actualPointIndex,i);
                             nextPointIndex = i;
                         }
@@ -60,11 +61,11 @@ public class NearestNeighbour {
             actualPoint.setVisited(true);
             pathLength+=tempDistanceBetweenTwoPoints;
             visitedPointsCount+=1;
-
+            System.out.println("dodano: " + tempDistanceBetweenTwoPoints);
 
         }while(visitedPointsCount!=citiesCoord.length);
 
-
+        pathLength += distanceCalculator.getDistanceFromDistanceArray(actualPointIndex,startingPointIndex);
         return pathLength;
     }
 
